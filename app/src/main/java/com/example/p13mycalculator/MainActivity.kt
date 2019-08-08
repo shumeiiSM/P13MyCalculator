@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     var start = 0
     var press = false
+    var dot = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,24 @@ class MainActivity : AppCompatActivity() {
                 number = ""
                 number2 = ""
                 tvFinal.text = "0"
+            }
+
+            btnNP.id -> {
+                val theValue = tvFinal.text.toString()
+                val v = theValue.toInt()
+                if (v < 0) {
+                    theValue.substring(1)
+                    tvFinal.text = "$theValue"
+                } else {
+                    tvFinal.text = "-$theValue"
+                }
+            }
+
+            btnD.id -> {
+                val theValue = tvFinal.text.toString()
+                val d = theValue.toInt() / 100
+                tvFinal.text = "$d"
+                number = ""
             }
 
             btnOne.id -> {
@@ -285,14 +304,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnPoint.id -> {
-                if (press == true) {
-                    number2 += "."
-                    tvFinal.text = "$number2"
-                    press = false
+                if (dot == false) {
+                    if (press == true) {
+                        number2 += "."
+                        tvFinal.text = "$number2"
+                        press = false
+                        dot = true
 
-                } else {
-                    number += "."
-                    tvFinal.text = "$number"
+                    } else {
+                        number += "."
+                        tvFinal.text = "$number"
+                        dot = true
+                    }
                 }
             }
         }
