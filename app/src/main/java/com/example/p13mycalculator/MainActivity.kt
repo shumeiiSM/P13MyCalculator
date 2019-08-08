@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
     var start = 0
     var press = false
 
-    var numbers: MutableList<Double> = mutableListOf<Double>()
-    var calculation: MutableList<String> = mutableListOf<String>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +27,12 @@ class MainActivity : AppCompatActivity() {
         val btnSelected = view as Button
 
         when (btnSelected.id) {
+            btnAC.id -> {
+                number = ""
+                number2 = ""
+                tvFinal.text = "0"
+            }
+
             btnOne.id -> {
                 if (press == true) {
                     if (start == 0) {
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                     start++
 
                 } else {
+                    number = ""
                     if (start == 0) {
                         number = "1"
                         tvFinal.text = "$number"
@@ -320,45 +324,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnEqual.id -> {
-                mycal = "="
                 var num = 0.0
-                var calNum = ""
 
-                for (i in mycal) {
-                    if (i.equals('+') || i.equals('*') || i.equals('/') || i.equals('-') || i.equals('=')) {
-                        numbers.add(calNum.toDouble())
-                        calculation.add(i.toString())
-                        calNum = ""
-                    } else {
-                        calNum += i
-                    }
+                if (mycal.equals("+")) {
+                    num = number.toDouble() + number2.toDouble()
+                } else if (mycal.equals("*")) {
+                    num = number.toDouble() * number2.toDouble()
+                } else if (mycal.equals("-")) {
+                    num = number.toDouble() - number2.toDouble()
+                } else if (mycal.equals("/")) {
+                    num = number.toDouble() / number2.toDouble()
                 }
 
-                var counter = 0
-                for (i in 0..(numbers.size - 1)) {
-                    if (counter == 0) {
-                        num = numbers.get(i)
-
-                    } else {
-
-                        var numb = numbers.get(i)
-                        var cal = calculation.get(i - 1)
-                        if (cal.equals("+")) {
-                            num = num + numb
-                        } else if (cal.equals("*")) {
-                            num = num * numb
-                        } else if (cal.equals("-")) {
-                            num = num - numb
-                        } else if (cal.equals("/")) {
-                            num = num / numb
-                        }
-                    }
-                    counter++
-                }
 
                 final = "$num"
-                numbers.clear()
-                calculation.clear()
 
                 tvFinal.text = "$final"
 
